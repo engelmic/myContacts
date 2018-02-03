@@ -1,10 +1,13 @@
 from typing import Union
+from model.contact import Contact
 import model.service as service
 
 
+
 def main_menu():
+    contacts = service.load_all_contacts()
     while True:
-        contacts = service.load_all_contacts()
+        # contacts = service.load_all_contacts()
         print("\n\n-----------------------------")
         print("         MY Contacts         ")
         print("-----------------------------\n")
@@ -27,7 +30,8 @@ def main_menu():
         if choice == 0:
             exit(0)
         if choice == 1:
-            service.save_contact(__create_contact())
+            contacts.append(__create_contact())
+            service.save_contact(contacts)
         if choice == 2:
             pass
         if choice == 3:
@@ -36,7 +40,7 @@ def main_menu():
             pass
 
 
-def __create_contact():
+def __create_contact() -> Contact:
     fname = __get_fname()
     lname = __get_lname()
     priphone = __get_priphone()
@@ -63,7 +67,7 @@ def __get_secphone() -> Union[int, None]:
         return None
 
 
-def __return_contacts(list):
+def __return_contacts(list) -> None:
     print("\n")
     for contact in list:
         print("------")
