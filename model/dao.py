@@ -4,9 +4,13 @@ from model import service as service
 
 def store_contacts(o) -> None:
     '''
+    This function performs 3 actions:
+    1. Takes a list of Contact objects, translates them to dictionaries.
+    2. Stores dictionaries in list f.
+    3. List f is written to the json file.
 
-    :param o:
-    :return:
+    :param o: array of Contact objects
+    :return: -> None
     '''
     f = []
     file = open("contactsdb.json", "w")
@@ -20,8 +24,9 @@ def load_contacts() -> list:
     '''
     This function performs 2 actions:
     1. Attempt to open data file. If it doesn't exist, create a blank file.
-    2. Read the file and append a dictionary version of the object to the rtn array.
-    :return:
+    2. Read the file and append a dictionary version of the object to the rtn list.
+
+    :return: rtn -> list
     '''
     rtn = []
     try:

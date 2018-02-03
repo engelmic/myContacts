@@ -31,7 +31,7 @@ def main_menu():
             exit(0)
         if choice == 1:
             contacts.append(__create_contact())
-            service.save_contact(contacts)
+            service.save_contacts(contacts)
         if choice == 2:
             pass
         if choice == 3:

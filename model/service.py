@@ -15,5 +15,5 @@ def load_all_contacts() -> list:
     return dao.load_contacts()
 
 
-def save_contact(info) -> None:
+def save_contacts(info) -> None:
     dao.store_contacts(info)
