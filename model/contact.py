@@ -1,11 +1,20 @@
 class Contact(object):
 
     def __init__(self):
-        # self.__conID = None
+        self.__conID = None
         self.__fname = ""
         self.__lname = ""
         self.__priphone = None
         self.__secphone = None
+
+
+    @property
+    def conID(self) -> int:
+        return self.__conID
+
+    @conID.setter
+    def conID(self, num) -> None:
+        self.__conID = num
 
     @property
     def fname(self) -> str:

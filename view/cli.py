@@ -5,7 +5,7 @@ import model.service as service
 
 
 def main_menu():
-    contacts = service.load_all_contacts()
+    # contacts = service.load_all_contacts()
     while True:
         # contacts = service.load_all_contacts()
         print("\n\n-----------------------------")
@@ -30,8 +30,7 @@ def main_menu():
         if choice == 0:
             exit(0)
         if choice == 1:
-            contacts.append(__create_contact())
-            service.save_contacts(contacts)
+            service.save_contact(__create_contact())
         if choice == 2:
             pass
         if choice == 3:
