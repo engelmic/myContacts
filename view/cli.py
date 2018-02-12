@@ -3,11 +3,8 @@ from model.contact import Contact
 import model.service as service
 
 
-
 def main_menu():
-    # contacts = service.load_all_contacts()
     while True:
-        # contacts = service.load_all_contacts()
         print("\n\n-----------------------------")
         print("         MY Contacts         ")
         print("-----------------------------\n")
@@ -20,9 +17,11 @@ def main_menu():
         print("0. Exit\n")
 
         choice = input("What would you like to do?  ")
+
+        # this try statement doesn't actually check for a valid integer, just an integer **fix**
         try:
             choice = int(choice)
-        except:
+        except ValueError:
             print("\nI need a valid integer 0-6!")
             input("Press Enter to continue")
             pass
@@ -32,11 +31,11 @@ def main_menu():
         if choice == 1:
             service.save_contact(__create_contact())
         if choice == 2:
-            pass
+            print("Not implemented yet!")
         if choice == 3:
-            __return_contacts(contacts)
+            print("Not implemented yet")
         if choice == 4:
-            pass
+            __return_contacts(service.search_contacts(__search()))
 
 
 def __create_contact() -> Contact:
@@ -76,3 +75,9 @@ def __return_contacts(list) -> None:
         print("Secondary Phone:", contact.secphone)
         print("------\n\n")
     input("Press enter to continue.")
+
+
+def __search():
+    uin = int(input("Do you want to search by (1)Name or (2)Number?"))
+    st = input("Please enter your search term: ")
+    return (st, uin)

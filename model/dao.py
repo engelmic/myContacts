@@ -1,6 +1,15 @@
 import os
 import sqlite3
-# from model import service as service
+from model.contact import Contact
+
+
+def create_contact(fname, lname, priphone, secphone) -> Contact:
+    con = Contact()
+    con.fname = fname
+    con.lname = lname
+    con.priphone = priphone
+    con.secphone = secphone
+    return con
 
 
 def connect_db():
@@ -8,33 +17,55 @@ def connect_db():
         conn = sqlite3.connect('contacts.db')
     else:
         conn = sqlite3.connect('contacts.db')
-        create_db()
+        create_db(conn)
 
+    conn.row_factory = sqlite3.Row
     return conn
 
 
-def create_db(conn: connect_db()) -> None:
+def create_db(conn) -> None:
     # conn = dbconn
     cursor = conn.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS Contacts(ContactID INTEGER PRIMARY KEY AUTOINCREMENT, FirstName TEXT, '
                    'LastName TEXT, PriPhone INTEGER,SecPhone INTEGER)')
-    cursor.close()
 
 
-def store_contact(conn: connect_db(), o) -> None:
+def store_contact(o, conn) -> None:
     cursor = conn.cursor()
     cursor.execute("INSERT INTO Contacts (FirstName, LastName, PriPhone, SecPhone) VALUES (?,?,?,?)",
                    (o.fname, o.lname, o.priphone, o.secphone))
     conn.commit()
-    cursor.close()
 
 
-def find_contact(conn: connect_db(), searchterm):
-    pass
-
+def find_contact(conn, searchterm, intype):
+    cursor = conn.cursor()
+    if intype == 1:
+        cursor.execute("SELECT "
+               "ContactID, "
+               "FirstName, "
+               "LastName, "
+               "PriPhone, "
+               "SecPhone "
+               "FROM Contacts WHERE FirstName=? OR LastName=?", (searchterm, searchterm))
+    elif intype == 2:
+        cursor.execute("SELECT "
+                       "ContactID, "
+                       "FirstName, "
+                       "LastName, "
+                       "PriPhone, "
+                       "SecPhone "
+                       "FROM Contacts WHERE PriPhone=? OR SecPhone=?", (searchterm, searchterm))
+    data = cursor.fetchall()
+    con_list = []
+    for con in data:
+        con_list.append(create_contact(con['FirstName'], con['LastName'], con['PriPhone'], con['SecPhone']))
+    return con_list
 
 def delete_contact():
     pass
+
+
+
 
 # import sqlite3
 # import json
