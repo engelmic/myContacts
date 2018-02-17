@@ -16,9 +16,8 @@ def main_menu():
         print("6. Delete all Contacts\n")
         print("0. Exit\n")
 
-        choice = input("What would you like to do?  ")
+        choice = input("Make your selection and press enter:  ")
 
-        # this try statement doesn't actually check for a valid integer, just an integer **fix**
         try:
             choice = int(choice)
         except ValueError:
@@ -26,6 +25,8 @@ def main_menu():
             input("Press Enter to continue")
             pass
 
+        if choice > 6:
+            input("Selection invalid! Press enter to continue")
         if choice == 0:
             exit(0)
         if choice == 1:
@@ -35,6 +36,8 @@ def main_menu():
         if choice == 3:
             print("Not implemented yet")
         if choice == 4:
+            __return_contacts(service.search_contacts(__search()))
+        if choice == 5:
             __return_contacts(service.search_contacts(__search()))
 
 
@@ -47,20 +50,22 @@ def __create_contact() -> Contact:
 
 
 def __get_fname() -> str:
-    return input("Contact's first name:").capitalize()
+    return input("Contact's first name (required):").capitalize()
 
 
-def __get_lname() -> str:
-    return input("Contact's last name:").capitalize()
-
+def __get_lname() -> Union[str, None]:
+    try:
+        return input("Contact's last name:").capitalize()
+    except:
+        return None
 
 def __get_priphone() -> int:
-    return int(input("Contact's primary phone number:"))
+    return int(input("Contact's primary phone number (required):"))
 
 
 def __get_secphone() -> Union[int, None]:
     try:
-        return int(input("Contact's primary phone number:"))
+        return int(input("Contact's secondary phone number:"))
     except:
         return None
 
@@ -69,6 +74,7 @@ def __return_contacts(list) -> None:
     print("\n")
     for contact in list:
         print("------")
+        print("Contact ID #", contact.conID)
         print("First Name:", contact.fname)
         print("Last Name:", contact.lname)
         print("Primary Phone:", contact.priphone)
@@ -78,6 +84,7 @@ def __return_contacts(list) -> None:
 
 
 def __search():
-    uin = int(input("Do you want to search by (1)Name or (2)Number?"))
-    st = input("Please enter your search term: ")
-    return (st, uin)
+    # uin = int(input("Do you want to search by (1)Name or (2)Number?"))
+    st = input("Please enter your search term: ").capitalize()
+    # return (st, uin)
+    return st

@@ -1,4 +1,3 @@
-# from model.contact import Contact
 import model.dao as dao
 
 
@@ -20,10 +19,10 @@ def save_contact(info) -> None:
     dao.store_contact(info, conn)
 
 
-def search_contacts(tup_in):
+def search_contacts(searchterm):
     conn = dao.connect_db()
-    searchterm, intype = tup_in
-    return dao.find_contact(conn, searchterm, intype)
+    # searchterm, intype = tup_in
+    return dao.find_contact(conn, searchterm)
 
 def create_contact(fname, lname, priphone, secphone):
     return dao.create_contact(fname, lname, priphone, secphone)

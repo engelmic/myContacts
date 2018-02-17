@@ -1,3 +1,4 @@
+from typing import Union
 class Contact(object):
 
     def __init__(self):
@@ -14,6 +15,8 @@ class Contact(object):
 
     @conID.setter
     def conID(self, num) -> None:
+        if not isinstance(num, int):
+            raise TypeError("This should be an integer set by the database")
         self.__conID = num
 
     @property
@@ -22,6 +25,8 @@ class Contact(object):
 
     @fname.setter
     def fname(self, name) -> None:
+        if not isinstance(name, str):
+            raise TypeError("This should be a string!")
         self.__fname = name
 
     @property
@@ -30,6 +35,8 @@ class Contact(object):
 
     @lname.setter
     def lname(self, name) -> None:
+        if not isinstance(name, str):
+            raise TypeError("This should be a string!")
         self.__lname = name
 
     @property
@@ -38,6 +45,8 @@ class Contact(object):
 
     @priphone.setter
     def priphone(self, num) -> None:
+        if not isinstance(num, int):
+            raise TypeError("This should be an integer set by the database")
         self.__priphone = num
 
     @property
@@ -46,4 +55,6 @@ class Contact(object):
 
     @secphone.setter
     def secphone(self, num) -> None:
+        if not isinstance(num, Union[int, None]):
+            raise TypeError("This should be an integer set by the database")
         self.__secphone = num
