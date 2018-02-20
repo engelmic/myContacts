@@ -16,14 +16,15 @@ def main_menu():
         print("6. Delete all Contacts\n")
         print("0. Exit\n")
 
-        choice = input("Make your selection and press enter:  ")
-
-        try:
-            choice = int(choice)
-        except ValueError:
-            print("\nI need a valid integer 0-6!")
-            input("Press Enter to continue")
-            pass
+        in_ok = True
+        while in_ok:
+            choice = input("Make your selection and press enter:  ")
+            try:
+                choice = int(choice)
+                in_ok = False
+            except ValueError:
+                print("\nI need a valid integer 0-6!")
+                input("Press Enter to continue")
 
         if choice > 6:
             input("Selection invalid! Press enter to continue")
@@ -34,11 +35,12 @@ def main_menu():
         if choice == 2:
             print("Not implemented yet!")
         if choice == 3:
-            print("Not implemented yet")
+            __return_contacts(service.return_all_contacts())
         if choice == 4:
             __return_contacts(service.search_contacts(__search()))
         if choice == 5:
             __return_contacts(service.search_contacts(__search()))
+            service.delete_contact(__get_conid('delete'))
 
 
 def __create_contact() -> Contact:
@@ -46,7 +48,7 @@ def __create_contact() -> Contact:
     lname = __get_lname()
     priphone = __get_priphone()
     secphone = __get_secphone()
-    return service.create_contact(fname, lname, priphone, secphone)
+    return service.create_contact(None, fname, lname, priphone, secphone)
 
 
 def __get_fname() -> str:
@@ -88,3 +90,11 @@ def __search():
     st = input("Please enter your search term: ").capitalize()
     # return (st, uin)
     return st
+
+
+def __get_conid(act):
+    try:
+        return int(input("Please enter the Contact ID number you wish to", act, ": "))
+    except ValueError:
+        input("I will only accept 1 valid integer. Press enter to continue.")
+        return None

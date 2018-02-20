@@ -31,12 +31,26 @@ def create_db(conn) -> None:
                    'LastName TEXT, PriPhone INTEGER,SecPhone INTEGER)')
 
 
+def format_contact_list(data) -> list:
+    con_list = []
+    for con in data:
+        con_list.append(
+            create_contact(con['ContactID'], con['FirstName'], con['LastName'], con['PriPhone'], con['SecPhone']))
+    return con_list
+
+
 def store_contact(o, conn) -> None:
     cursor = conn.cursor()
     cursor.execute("INSERT INTO Contacts (FirstName, LastName, PriPhone, SecPhone) VALUES (?,?,?,?)",
                    (o.fname, o.lname, o.priphone, o.secphone))
     conn.commit()
 
+
+def return_all_contacts(conn):
+    cursor = conn.cursor()
+    cursor.execute("SELECT ContactID, FirstName, LastName, PriPhone, SecPhone FROM Contacts")
+    data = cursor.fetchall()
+    return format_contact_list(data)
 
 def find_contact(conn, searchterm):
     cursor = conn.cursor()
@@ -50,11 +64,10 @@ def find_contact(conn, searchterm):
                    (searchterm, searchterm, searchterm, searchterm))
 
     data = cursor.fetchall()
-    con_list = []
-    for con in data:
-        con_list.append(create_contact(con['ContactID'], con['FirstName'], con['LastName'], con['PriPhone'], con['SecPhone']))
-    return con_list
+    return format_contact_list(data)
 
 
 def delete_contact(conn, del_con):
-    pass
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM Contacts WHERE ContactID=?',(del_con,))
+    conn.commit()

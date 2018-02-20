@@ -15,8 +15,8 @@ class Contact(object):
 
     @conID.setter
     def conID(self, num) -> None:
-        if not isinstance(num, int):
-            raise TypeError("This should be an integer set by the database")
+        # if not isinstance(num, int):
+        #     raise TypeError("This should be an integer set by the database")
         self.__conID = num
 
     @property
@@ -55,6 +55,6 @@ class Contact(object):
 
     @secphone.setter
     def secphone(self, num) -> None:
-        if not isinstance(num, Union[int, None]):
+        if not isinstance(num, int) and num is not None:
             raise TypeError("This should be an integer set by the database")
         self.__secphone = num

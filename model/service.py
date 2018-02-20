@@ -1,17 +1,13 @@
+from model.contact import Contact
 import model.dao as dao
 
-
-# def create_contact(fname, lname, priphone, secphone) -> Contact:
-#     con = Contact()
-#     con.fname = fname
-#     con.lname = lname
-#     con.priphone = priphone
-#     con.secphone = secphone
-#     return con
+def create_contact(conID, fname, lname, priphone, secphone) -> Contact():
+    return dao.create_contact(conID, fname, lname, priphone, secphone)
 
 
-def load_all_contacts() -> list:
-    return dao.load_contacts()
+def return_all_contacts() -> list:
+    conn = dao.connect_db()
+    return dao.return_all_contacts(conn)
 
 
 def save_contact(info) -> None:
@@ -19,10 +15,11 @@ def save_contact(info) -> None:
     dao.store_contact(info, conn)
 
 
-def search_contacts(searchterm):
+def search_contacts(searchterm) -> list:
     conn = dao.connect_db()
-    # searchterm, intype = tup_in
     return dao.find_contact(conn, searchterm)
 
-def create_contact(fname, lname, priphone, secphone):
-    return dao.create_contact(fname, lname, priphone, secphone)
+
+def delete_contact(del_conn) -> None:
+    conn = dao.connect_db()
+    return dao.delete_contact(conn, del_conn)
