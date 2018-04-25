@@ -87,14 +87,14 @@ def __return_contacts(list) -> None:
 
 def __search():
     # uin = int(input("Do you want to search by (1)Name or (2)Number?"))
-    st = input("Please enter your search term: ").capitalize()
+    st = input("Please enter your search term: ")
     # return (st, uin)
     return st
 
 
 def __get_conid(act):
     try:
-        return int(input("Please enter the Contact ID number you wish to", act, ": "))
+        return int(input("Please enter the Contact ID number you wish to {}: ".format(act)))
     except ValueError:
         input("I will only accept 1 valid integer. Press enter to continue.")
         return None

@@ -1,5 +1,6 @@
 from model.contact import Contact
 import model.dao as dao
+from typing import List
 
 def create_contact(conID, fname, lname, priphone, secphone) -> Contact():
     return dao.create_contact(conID, fname, lname, priphone, secphone)

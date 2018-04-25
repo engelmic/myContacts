@@ -1,9 +1,10 @@
 import os
 import sqlite3
+from typing import List
 from model.contact import Contact
 
 
-def create_contact(conID, fname, lname, priphone, secphone) -> Contact:
+def create_contact(conID: int, fname: str, lname: str, priphone: int, secphone: int) -> Contact:
     con = Contact()
     con.conID = conID
     con.fname = fname
@@ -13,7 +14,7 @@ def create_contact(conID, fname, lname, priphone, secphone) -> Contact:
     return con
 
 
-def connect_db():
+def connect_db() -> sqlite3.Connection:
     if os.path.exists('contacts.db'):
         conn = sqlite3.connect('contacts.db')
     else:
@@ -31,7 +32,7 @@ def create_db(conn) -> None:
                    'LastName TEXT, PriPhone INTEGER,SecPhone INTEGER)')
 
 
-def format_contact_list(data) -> list:
+def format_contact_list(data) -> List[Contact]:
     con_list = []
     for con in data:
         con_list.append(
@@ -46,28 +47,31 @@ def store_contact(o, conn) -> None:
     conn.commit()
 
 
-def return_all_contacts(conn):
+def return_all_contacts(conn) -> List[Contact]:
     cursor = conn.cursor()
     cursor.execute("SELECT ContactID, FirstName, LastName, PriPhone, SecPhone FROM Contacts")
     data = cursor.fetchall()
     return format_contact_list(data)
 
-def find_contact(conn, searchterm):
+
+# noinspection SpellCheckingInspection
+def find_contact(conn, searchterm) -> List[Contact]:
+    searchterm = "%" + searchterm + "%"
     cursor = conn.cursor()
     cursor.execute("SELECT "
-               "ContactID, "
-               "FirstName, "
-               "LastName, "
-               "PriPhone, "
-               "SecPhone "
-               "FROM Contacts WHERE FirstName=? OR LastName=? OR PriPhone=? OR SecPhone=?",
-                   (searchterm, searchterm, searchterm, searchterm))
+                   "ContactID, "
+                   "FirstName, "
+                   "LastName, "
+                   "PriPhone, "
+                   "SecPhone "
+                   "FROM Contacts WHERE FirstName LIKE ? OR LastName LIKE ? OR PriPhone LIKE ? OR SecPhone LIKE ?",
+                       (searchterm, searchterm, searchterm, searchterm))
 
     data = cursor.fetchall()
     return format_contact_list(data)
 
 
-def delete_contact(conn, del_con):
+def delete_contact(conn, del_con) -> None:
     cursor = conn.cursor()
     cursor.execute('DELETE FROM Contacts WHERE ContactID=?',(del_con,))
     conn.commit()
