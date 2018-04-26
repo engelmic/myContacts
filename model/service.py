@@ -21,6 +21,11 @@ def search_contacts(searchterm) -> list:
     return dao.find_contact(conn, searchterm)
 
 
-def delete_contact(del_conn) -> None:
+def delete_contact(del_con) -> None:
     conn = dao.connect_db()
-    return dao.delete_contact(conn, del_conn)
+    return dao.delete_contact(conn, del_con)
+
+
+def edit_contact(ed_con) -> None:
+    conn = dao.connect_db()
+    return 

@@ -75,3 +75,9 @@ def delete_contact(conn, del_con) -> None:
     cursor = conn.cursor()
     cursor.execute('DELETE FROM Contacts WHERE ContactID=?',(del_con,))
     conn.commit()
+
+
+def edit_contact(conn, ed_con) -> None:
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM Contacts WHERE ContactID=?',(del_con,))
+    conn.commit()

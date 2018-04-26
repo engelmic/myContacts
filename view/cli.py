@@ -33,7 +33,8 @@ def main_menu():
         if choice == 1:
             service.save_contact(__create_contact())
         if choice == 2:
-            print("Not implemented yet!")
+            __return_contacts(service.search_contacts(__search()))
+            # service.edit_contact(__get_conid('edit'))
         if choice == 3:
             __return_contacts(service.return_all_contacts())
         if choice == 4:
@@ -72,6 +73,14 @@ def __get_secphone() -> Union[int, None]:
         return None
 
 
+def __get_conid(act):
+    try:
+        return int(input("Please enter the Contact ID number you wish to {}: ".format(act)))
+    except ValueError:
+        input("I will only accept 1 valid integer. Press enter to continue.")
+        return None
+
+
 def __return_contacts(list) -> None:
     print("\n")
     for contact in list:
@@ -90,11 +99,3 @@ def __search():
     st = input("Please enter your search term: ")
     # return (st, uin)
     return st
-
-
-def __get_conid(act):
-    try:
-        return int(input("Please enter the Contact ID number you wish to {}: ".format(act)))
-    except ValueError:
-        input("I will only accept 1 valid integer. Press enter to continue.")
-        return None
