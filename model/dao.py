@@ -71,7 +71,34 @@ def find_contact(conn, searchterm) -> List[Contact]:
     return format_contact_list(data)
 
 
+def get_contact_by_ID(conn, con_ID) -> Contact:
+    cursor = conn.cursor()
+    cursor.execute("SELECT "
+                   "ContactID, "
+                   "FirstName, "
+                   "LastName, "
+                   "PriPhone, "
+                   "SecPhone "
+                   "FROM Contacts WHERE ContactID = ?",
+                   (con_ID))
+    data = cursor.fetchall()
+    return format_contact_list(data)
+
+
 def delete_contact(conn, del_con) -> None:
     cursor = conn.cursor()
     cursor.execute('DELETE FROM Contacts WHERE ContactID=?',(del_con,))
+    conn.commit()
+
+
+def update_contact(o, conn) -> None:
+    cursor = conn.cursor()
+    cursor.execute("UPDATE Contacts "
+                   "SET "
+                   "FirstName=?, "
+                   "LastName=?, "
+                   "PriPhone=?, "
+                   "SecPhone=? "
+                   "WHERE ContactID = ?",
+                   (o.fname, o.lname, o.priphone, o.secphone, o.conID))
     conn.commit()

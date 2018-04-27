@@ -33,7 +33,8 @@ def main_menu():
         if choice == 1:
             service.save_contact(__create_contact())
         if choice == 2:
-            print("Not implemented yet!")
+            __return_contacts(service.search_contacts(__search()))
+            __edit_contact(input("Enter the Contact ID# of the contact you wish to edit: "))
         if choice == 3:
             __return_contacts(service.return_all_contacts())
         if choice == 4:
@@ -51,23 +52,33 @@ def __create_contact() -> Contact:
     return service.create_contact(None, fname, lname, priphone, secphone)
 
 
-def __get_fname() -> str:
-    return input("Contact's first name (required):").capitalize()
+def __edit_contact(in_ID) -> None:
+    con_obj = (service.return_contact_by_ID(in_ID))
+    fname = __get_fname(con_obj.fname)
+    lname = __get_lname(con_obj.lname)
+    priphone = __get_priphone(con_obj.priphone)
+    secphone = __get_secphone(con_obj.secphone)
+    return service.edit_contact(con_obj.conID, fname, lname, priphone, secphone)
 
 
-def __get_lname() -> Union[str, None]:
+def __get_fname(current=None) -> str:
+    return input("Contact's first name (required)[{}]:".format(current)).capitalize() or current
+
+
+def __get_lname(current=None) -> Union[str, None]:
     try:
-        return input("Contact's last name:").capitalize()
+        return input("Contact's last name [{}]:".format(current)).capitalize() or current
     except:
         return None
 
-def __get_priphone() -> int:
-    return int(input("Contact's primary phone number (required):"))
+def __get_priphone(current=None) -> int:
+    pnum = input("Contact's primary phone number (required)[{}]:".format(current)) or current
+    return int(pnum)
 
 
-def __get_secphone() -> Union[int, None]:
+def __get_secphone(current=None) -> Union[int, None]:
     try:
-        return int(input("Contact's secondary phone number:"))
+        return int(input("Contact's secondary phone number [{}]:".format(current))) or int(current)
     except:
         return None
 
