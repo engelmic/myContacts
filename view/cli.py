@@ -53,12 +53,15 @@ def __create_contact() -> Contact:
 
 
 def __edit_contact(in_ID) -> None:
-    con_obj = (service.return_contact_by_ID(in_ID))
-    fname = __get_fname(con_obj.fname)
-    lname = __get_lname(con_obj.lname)
-    priphone = __get_priphone(con_obj.priphone)
-    secphone = __get_secphone(con_obj.secphone)
-    return service.edit_contact(con_obj.conID, fname, lname, priphone, secphone)
+    if in_ID:
+        con_obj = (service.return_contact_by_ID(in_ID))
+        fname = __get_fname(con_obj.fname)
+        lname = __get_lname(con_obj.lname)
+        priphone = __get_priphone(con_obj.priphone)
+        secphone = __get_secphone(con_obj.secphone)
+        return service.edit_contact(con_obj.conID, fname, lname, priphone, secphone)
+    else:
+        pass
 
 
 def __get_fname(current=None) -> str:
